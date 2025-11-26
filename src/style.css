@@ -1,0 +1,12 @@
+body{
+    background: #d665e0;
+    background: -webkit-linear-gradient(25deg, rgba(214, 101, 224, 1) 0%, rgba(176, 133, 212, 0.75) 50%, rgba(230, 122, 226, 1) 100%);
+    background: -moz-linear-gradient(25deg, rgba(214, 101, 224, 1) 0%, rgba(176, 133, 212, 0.75) 50%, rgba(230, 122, 226, 1) 100%);
+    background: linear-gradient(25deg, rgba(214, 101, 224, 1) 0%, rgba(176, 133, 212, 0.75) 50%, rgba(230, 122, 226, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#D665E0", endColorstr="#E67AE2", GradientType=0);
+}
+
+header h1{
+    font-family: "Shizuru", system-ui;
+    padding: 0.5%;
+}
