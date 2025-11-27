@@ -5,15 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kedebideri:wght@400;500;600;700;800;900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Shizuru&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>KawaiiTask</h1>
-    </header>    
-    <main></main>
+        <h1>Kawaiitask</h1>
+    </header>
+    <main>
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="my-account">
+                    <img src="assets/profile-pic.png">
+                    <span id="account-name">Rayx</span>
+                </div>
+                <button id="add-project"><span class="material-symbols-outlined">home_app_logo</span><span>Home</span></button>
+                <button id="add-project"><span class="material-symbols-outlined">today</span><span>Today</span></button>
+                <button id="add-project"><span class="material-symbols-outlined">view_week</span><span>Weekly</span></button>
+                <button id="add-project"><span class="material-symbols-outlined">add</span><span>Add New Project</span></button>            
+            </div>
+            <div class="my-projects">
+            </div>
+        </div>
+        <div class="main-content"></div>
+    </main>
     <script src="index.js"></script>
 </body>
 </html>
