@@ -171,6 +171,7 @@ main{
     border-radius: 30%;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     box-shadow: 0 6px 0 #d96aa8;
+    position: relative;
 }
 
 .task:hover{
@@ -181,4 +182,23 @@ main{
 .task-details{
     display: flex;
     flex-direction: column;
+}
+
+.task-options{
+    position: absolute;
+    top: 15px;
+    right:  38px;
+    display: flex;
+    gap: 10px;
+    transition: transform 0.25s ease;
+    cursor: pointer;
+}
+
+.task-options span:hover{
+    color: #d96aa8;
+}
+
+.task-options span:active{
+    color: #ff7ec7;
+    transform: translateY(-2px) scale(0.95);
 }
