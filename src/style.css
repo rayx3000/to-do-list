@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=Kedebideri:wght@400;500;600;700;800;900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Schoolbell&family=Shizuru&display=swap');
+
 *{
-    font-family: "Kedebideri", sans-serif;
+    font-family: "Schoolbell", "Kedebideri", sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -11,9 +13,9 @@ body {
     position: relative;
     overflow: hidden;
     background: 
-        radial-gradient(ellipse at 10% 20%, rgba(255, 255, 255, 0.12) 0%, transparent 45%),
-        radial-gradient(ellipse at 90% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(230, 122, 226, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 20%, rgba(163, 20, 199, 0.12) 0%, transparent 45%),
+        radial-gradient(ellipse at 90% 80%, rgba(85, 55, 80, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(240, 126, 255, 0.445) 0%, transparent 60%),
         linear-gradient(135deg, #d665e0 0%, #b085d4 50%, #e67ae2 100%);
     animation: subtleShift 15s ease-in-out infinite;
 }
@@ -58,7 +60,6 @@ main{
     background: transparent;
 }
 
-/* Add the missing neonPulse animation */
 @keyframes neonPulse {
     from { 
         box-shadow: 0 0 20px #e67ae2, 0 0 40px #d665e0;
@@ -67,6 +68,8 @@ main{
         box-shadow: 0 0 30px #e67ae2, 0 0 60px #d665e0;
     }
 }
+
+/*SIDEBAR*/
 
 .sidebar{
     background: #e063ff;
@@ -90,6 +93,7 @@ main{
     cursor: pointer;
     border-radius: 12px;
     background-color: transparent;
+    transition: transform 0.12s ease-in-out;
 }
 
 .sidebar button:hover{
@@ -98,6 +102,7 @@ main{
 
 .sidebar button:active{
     background-color: #ffa7e5;
+    transform: scale(0.98);
 }
 
 .sidebar-content{
@@ -129,4 +134,51 @@ main{
     margin-top: 12px;
     height: 38vh;
     overflow: auto;
+}
+
+/*MAIN*/
+
+.main-content{
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.project-title{
+    background: #eb7ce1;
+    background: radial-gradient(circle, rgba(235, 124, 225, 0.32) 0%, rgba(216, 112, 204, 1) 100%);
+    width: 75vw;
+    text-align: center;
+    padding: 0.75%;
+    border-radius: 20%;
+}
+
+.project-title h1{
+    font-family: "Shizuru", system-ui;
+}
+
+.to-do-list{
+    padding: 1%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.task{
+    background-color: #d894ec;
+    padding: 9.2%;
+    border-radius: 30%;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 6px 0 #d96aa8;
+}
+
+.task:hover{
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 12px 0 #d96aa8;
+}
+
+.task-details{
+    display: flex;
+    flex-direction: column;
 }
