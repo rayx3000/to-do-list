@@ -150,12 +150,47 @@ main{
     background: radial-gradient(circle, rgba(235, 124, 225, 0.32) 0%, rgba(216, 112, 204, 1) 100%);
     width: 75vw;
     text-align: center;
-    padding: 0.75%;
+    padding: 1.2%;
     border-radius: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 42vw;
 }
 
 .project-title h1{
     font-family: "Shizuru", system-ui;
+}
+
+.add-task-btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 8px;
+    padding: 0.78%;
+    border-radius: 35%;
+    border: 1px solid #330a19;
+    background: #ff8db7;
+    background: radial-gradient(circle, rgba(252, 121, 169, 0.5) 0%, rgba(214, 101, 224, 1) 100%);
+    transition:
+        transform 3.2s cubic-bezier(.2,.9,.2,1),
+        background-color 2.8s ease-in-out,
+        color 2.8s ease-in-out,
+        box-shadow 2.8s ease-in-out;
+    will-change: transform, background-color, color;
+    cursor: pointer;
+}
+
+.add-task-btn:hover{
+    background: #fc79a9;
+    background: radial-gradient(circle, rgba(252, 121, 169, 0.5) 0%, rgb(255, 143, 184) 100%);
+    box-shadow: rgba(78, 10, 58, 0.25) 0px 54px 55px, rgba(81, 37, 90, 0.12) 0px -12px 30px, rgba(51, 18, 88, 0.12) 0px 4px 6px, rgba(80, 58, 85, 0.17) 0px 12px 13px, rgba(90, 23, 54, 0.09) 0px -3px 5px;
+}
+
+.add-task-btn:active{
+    transform: scale(0.935);
+    background: #f0c2d7;
+    background: radial-gradient(circle, rgba(240, 194, 215, 0.5) 0%, rgba(255, 187, 244, 1) 100%);
 }
 
 .to-do-list{
