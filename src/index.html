@@ -36,6 +36,33 @@
             <div class="project-title">
                 <h1>Default</h1>
                 <button class="add-task-btn"><span class="material-symbols-outlined">add</span><span>Add New Task</span></span></button>
+                <dialog class="add-dialog">
+                    <span class="material-symbols-outlined" id="close">close</span>
+                    <h3>Add New Class</h3>
+                    <form id="add-task-form" method="dialog">
+                        <label for="task-name">
+                            <span>Name</span>
+                            <input type="text" name="task-name" id="task-name">
+                        </label>
+                        <label for="task-date">
+                            <span>Date</span>
+                            <input type="date" name="task-date" id="task-date">
+                        </label>
+                        <label for="task-importance">
+                            <span>Importance/Priority</span>
+                            <select id="task-importance" name="task-importance">
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </label>
+                        <label for="description">
+                            <span>Description</span>
+                            <textarea class="description-textbox" maxlength="75"></textarea>
+                        </label>
+                        <button type="submit">Add Task</button>
+                    </form>
+                </dialog>
             </div>
             <div class="to-do-list"></div>
         </div>
