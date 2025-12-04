@@ -136,6 +136,95 @@ main{
     overflow: auto;
 }
 
+.my-projects button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.my-projects button:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.my-projects .more {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    font-size: 20px;
+}
+
+.my-projects button:hover .more {
+    opacity: 1;
+}
+
+.projects{
+    position: relative;
+}
+
+.more:hover{
+    color: #333;
+}
+
+.more:active{
+    color: #555;
+}
+
+.menu {
+    position: absolute;
+    width: 12vw;
+    background: #d94cf5;            /* dark background */
+    color: #e7e7e7;
+    border-radius:10px;
+    padding:6px 0;
+    display: none;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.5);
+    border: 1px solid rgba(255,255,255,0.04);               /* shown via .show */
+    z-index: 1000;
+    left: 12vw;
+}
+
+.menu.show { 
+    display:flex; 
+    flex-direction:column; 
+}
+
+.menu button.menu-item {
+    display: flex;
+    padding: 10px 14px;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 14px;
+    justify-content: flex-start;
+    gap: 18px;
+    align-items: center;
+    width: 12vw;
+}
+
+.menu button.menu-item:hover { 
+    background:#e381f7; 
+}
+
+.menu hr {
+    margin:6px 0;
+    border:0;
+    border-top:1px solid rgba(255,255,255,0.04);
+}
+
+.menu button.delete {
+    color:#ff7b7b;
+}
+
+.menu .material-symbols-outlined { 
+    font-size:18px; 
+    opacity:0.95; 
+}
+
 /*MAIN*/
 
 .main-content{
