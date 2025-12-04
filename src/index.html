@@ -17,7 +17,18 @@
                 <button id="home"><span class="material-symbols-outlined">home_app_logo</span><span>Home</span></button>
                 <button id="today"><span class="material-symbols-outlined">today</span><span>Today</span></button>
                 <button id="weekly"><span class="material-symbols-outlined">view_week</span><span>Weekly</span></button>
-                <button id="add-project"><span class="material-symbols-outlined">add</span><span>Add New Project</span></button>            
+                <button id="add-project"><span class="material-symbols-outlined">add</span><span>Add New Project</span></button>
+                <dialog class="add-project">
+                    <span class="material-symbols-outlined" id="close2">close</span>
+                    <h3>Project</h3>
+                    <form id="add-project-form" method="dialog">
+                        <label for="project-name">
+                            <span>Project Name</span>
+                            <input type="text" id="project-name" name="project-name">
+                        </label>
+                        <button type="submit" id="add-new-project">Add New Project</button>
+                    </form>
+                </dialog>            
             </div>
             <div class="project-container">
                 <h3>My Projects</h3>

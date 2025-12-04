@@ -302,7 +302,11 @@ dialog{
     background: radial-gradient(circle, rgb(255, 194, 250) 0%, rgba(216, 112, 204, 1) 100%);
 }
 
-.add-dialog form{
+dialog h3{
+    text-align: center;
+}
+
+dialog form{
     margin-top: 25px;
     display: flex;
     flex-direction: column;
@@ -315,6 +319,7 @@ form label{
     flex-direction: column;
     align-items: center;
     border: none;
+    gap: 8px;
 }
 
 form input{
@@ -346,38 +351,39 @@ input:focus, select:focus, textarea:focus{
     outline: none;
 }
 
-form button{
+form button, #add-new-project{
     width: 8vw;
     padding: 1%;
     border: none;
     border-radius: 25%;
     background-color: #e17eff;
     border: 1px solid rgb(75, 43, 75);
+    text-align: center;
 }
 
-form button:hover{
+form button:hover, #add-new-project:hover{
     background-color: #d894ec;
     cursor: pointer;
 }
 
-form button:active{
+form button:active, #add-new-project:active{
     background-color: #f0bdff;
     transform: scale(0.92);
 }
 
-#close{
+#close, #close2{
     position: absolute;
     top: 8px;
     right: 12px;
     color: rgb(236, 38, 38);
 }
 
-#close:hover{
+#close:hover, #close2:hover{
     color: rgb(221, 90, 90);
     cursor: pointer;
 }
 
-#close:active{
+#close:active, #close2:active{
     opacity: 0.82;
     transform: scale(0.92);
 }

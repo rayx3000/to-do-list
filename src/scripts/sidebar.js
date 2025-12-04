@@ -1,3 +1,11 @@
+const addProjectDialog = document.querySelector(".add-project");
+const addProject = document.getElementById("add-project");
+const closeDialog = document.getElementById("close2");
+
+addProject.addEventListener("click", () => addProjectDialog.showModal());
+closeDialog.addEventListener("click", () => addProjectDialog.close());
+
+
 document.addEventListener('DOMContentLoaded', () => {
     function closeAll() {
         document.querySelectorAll('.menu.show').forEach(menu => {
@@ -65,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 4. Close on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeAll();
     });
