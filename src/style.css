@@ -81,7 +81,7 @@ main{
     gap: 20px;
 }
 
-.sidebar button{
+.sidebar-content > button{
     display: flex;
     align-items: center;
     justify-content: start;
@@ -141,10 +141,13 @@ main{
     align-items: center;
     justify-content: space-between;
     padding: 10px 12px;
+    width: 18vw;
     border-radius: 8px;
-    font-size: 14px;
     cursor: pointer;
     transition: background 0.15s ease, box-shadow 0.15s ease;
+    background-color: transparent;
+    transition: transform 0.12s ease-in-out;
+    border: none;
 }
 
 .my-projects button:hover {
