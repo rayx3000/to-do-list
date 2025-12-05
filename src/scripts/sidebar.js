@@ -1,3 +1,5 @@
+import { projects } from "./project.js";
+
 const addProjectDialog = document.querySelector(".add-project");
 const addProject = document.getElementById("add-project");
 const closeDialog = document.getElementById("close2");
@@ -5,6 +7,14 @@ const closeDialog = document.getElementById("close2");
 addProject.addEventListener("click", () => addProjectDialog.showModal());
 closeDialog.addEventListener("click", () => addProjectDialog.close());
 
+
+let projectLists = '';
+
+projects.map((projectTag) => {
+    projectLists += projectTag.generateProjectTag();
+});
+
+document.querySelector(".my-projects").innerHTML = projectLists;
 
 document.addEventListener('DOMContentLoaded', () => {
     function closeAll() {
