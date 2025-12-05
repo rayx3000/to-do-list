@@ -17,12 +17,15 @@ projects.map((projectTag) => {
 document.querySelector(".my-projects").innerHTML = projectLists;
 
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // Helper to close all open menus
     function closeAll() {
         document.querySelectorAll('.menu.show').forEach(menu => {
             menu.classList.remove('show');
             menu.setAttribute('aria-hidden', 'true');
         });
     }
+
     const container = document.querySelector('.my-projects');
 
     if (container) {
@@ -35,10 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const project = toggleBtn.closest('.project');
                 const menu = project.querySelector('.menu');
-
                 const isAlreadyOpen = menu.classList.contains('show');
 
-                closeAll();
+                closeAll(); 
 
                 if (!isAlreadyOpen) {
                     menu.classList.add('show');
@@ -46,30 +48,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 return;
             }
-
+            
             const menuItem = e.target.closest('.menu-item');
             if (menuItem) {
                 e.preventDefault();
                 
                 const project = menuItem.closest('.project');
-                const action = menuItem.dataset.action;
+                const action = menuItem.dataset.action; 
                 
                 const titleSpan = project.querySelector('.row-btn > span:first-child');
                 const currentTitle = titleSpan.textContent.trim();
 
                 if (action === 'rename') {
-                    const newName = prompt('Rename project:', currentTitle);
-                    if (newName && newName.trim() !== "") {
-                        titleSpan.textContent = newName.trim();
-                    }
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = currentTitle;
+                    input.className = 'project-edit-input';
+                    
+                    titleSpan.innerHTML = '';
+                    titleSpan.appendChild(input);
+                    input.focus();
+
+                    const saveName = () => {
+                        const newName = input.value.trim();
+                        titleSpan.textContent = newName || currentTitle; 
+                    };
+
+                    input.addEventListener('keydown', (evt) => {
+                        if (evt.key === 'Enter') {
+                            saveName();
+                        }
+                    });
+
+                    input.addEventListener('blur', () => {
+                        saveName();
+                    });
+
+                    console.log('Rename mode activated');
                 } 
                 else if (action === 'delete') {
-                    if (confirm(`Delete "${currentTitle}"?`)) {
-                        project.remove();
-                    }
+                   console.log('Delete action triggered');
+                   project.remove(); 
                 } 
                 else {
-                    console.log('Action triggered:', action);
+                    console.log('Other action triggered:', action);
                 }
 
                 closeAll();

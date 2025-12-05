@@ -168,6 +168,14 @@ main{
     position: relative;
 }
 
+.project-edit-input{
+    background-color: #fdace5;
+    border: none;
+    border-radius: 12px;
+    padding: 5px;
+    width: 14.2vw;
+}
+
 .more:hover{
     color: #333;
 }

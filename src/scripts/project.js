@@ -11,11 +11,11 @@ export default class Project {
     generateProjectTag(){
         return `<div class="project">
                         <button class="row-btn" id="${this.id}" type="button">
-                            <span>${this.name}</span> 
+                            <span id="project-name">${this.name}</span> 
                             <span class="material-symbols-outlined more" title="More">more_horiz</span>
                         </button>
 
-                        <div class="menu" role="menu" aria-hidden="true">
+                        <div class="menu" role="menu">
                             <button class="menu-item" data-action="rename"><span class="material-symbols-outlined">edit</span> Rename</button>
                             <button class="menu-item delete" data-action="delete"><span class="material-symbols-outlined">delete</span> Delete</button>
                         </div>
