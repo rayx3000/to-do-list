@@ -169,10 +169,9 @@ main{
 }
 
 .project-edit-input{
-    background-color: #fdace5;
+    background: transparent;
     border: none;
     border-radius: 12px;
-    padding: 5px;
     width: 14.2vw;
 }
 
@@ -196,6 +195,8 @@ main{
     border: 1px solid rgba(255,255,255,0.04);               /* shown via .show */
     z-index: 1000;
     left: 12vw;
+    display: flex;
+    flex-direction: column;
 }
 
 .menu.show { 
@@ -382,19 +383,19 @@ form button:active, #add-new-project:active{
     transform: scale(0.92);
 }
 
-#close, #close2{
+#close, #close2, .close-btn{
     position: absolute;
     top: 8px;
     right: 12px;
     color: rgb(236, 38, 38);
 }
 
-#close:hover, #close2:hover{
+#close:hover, #close2:hover, .close-btn:hover{
     color: rgb(221, 90, 90);
     cursor: pointer;
 }
 
-#close:active, #close2:active{
+#close:active, #close2:active, .close-btn:active{
     opacity: 0.82;
     transform: scale(0.92);
 }
@@ -402,8 +403,8 @@ form button:active, #add-new-project:active{
 
 .task{
     background-color: #d894ec;
-    padding: 9.2%;
-    border-radius: 30%;
+    padding: 7.5%;
+    border-radius: 30px;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     box-shadow: 0 6px 0 #d96aa8;
     position: relative;
@@ -421,20 +422,25 @@ form button:active, #add-new-project:active{
 
 .task-options{
     position: absolute;
-    top: 15px;
-    right:  38px;
+    top: 20px;
+    right:  30px;
     display: flex;
     gap: 10px;
     transition: transform 0.25s ease;
+}
+
+.task-options button{
+    background-color: transparent;
+    border: none;
+}
+
+.task-options button:hover{
     cursor: pointer;
+    color: #2a2a2a;
 }
 
-.task-options span:hover{
-    color: #d96aa8;
-}
-
-.task-options span:active{
-    color: #ff7ec7;
+.task-options button:active{
     transform: translateY(-2px) scale(0.95);
+    color: #555;
 }
 

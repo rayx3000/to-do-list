@@ -7,18 +7,8 @@ const closeDialog = document.getElementById("close2");
 addProject.addEventListener("click", () => addProjectDialog.showModal());
 closeDialog.addEventListener("click", () => addProjectDialog.close());
 
-
-let projectLists = '';
-
-projects.map((projectTag) => {
-    projectLists += projectTag.generateProjectTag();
-});
-
-document.querySelector(".my-projects").innerHTML = projectLists;
-
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Helper to close all open menus
     function closeAll() {
         document.querySelectorAll('.menu.show').forEach(menu => {
             menu.classList.remove('show');
