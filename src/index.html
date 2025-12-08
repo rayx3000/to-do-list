@@ -19,12 +19,12 @@
                 <button id="weekly"><span class="material-symbols-outlined">view_week</span><span>Weekly</span></button>
                 <button id="add-project"><span class="material-symbols-outlined">add</span><span>Add New Project</span></button>
                 
-                <dialog class="add-project-dialog"> <span class="material-symbols-outlined close-project-dialog" id="close2">close</span> 
+                <dialog class="add-project"> <span class="material-symbols-outlined close-project-dialog" id="close2">close</span> 
                     <h3>Add New Project</h3>
                     <form id="add-project-form" method="dialog">
                         <label for="project-name">
                             <span>Project Name</span>
-                            <input type="text" id="project-name" name="project-name" required>
+                            <input type="text" id="project-name-input" name="project-name-input" required>
                         </label>
                         <button type="submit" id="add-new-project">Add New Project</button>
                     </form>
@@ -33,7 +33,7 @@
             
             <div class="project-container">
                 <h3>My Projects</h3>
-                <div class="my-projects scroll"></div>
+                <div class="my-projects project-item scroll"></div>
             </div>
             
             <div class="my-account">

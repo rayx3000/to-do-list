@@ -10,10 +10,11 @@ export default class Project {
 
     createProjectElement() {
         const tempDiv = document.createElement('div');
+        tempDiv.dataset.id = this.id;
         
         tempDiv.innerHTML = `
-            <div class="project">
-                <button class="row-btn" id="${this.id}" type="button">
+            <div class="project" id=${this.id}>
+                <button class="row-btn" id="btn-${this.id}" type="button">
                     <span class="project-name-display">${this.name}</span> 
                     <span class="material-symbols-outlined more" title="More">more_horiz</span>
                 </button>

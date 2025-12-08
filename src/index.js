@@ -4,31 +4,26 @@ import Project from "./scripts/project.js";
 import ToDoList from "./scripts/to-do-list.js";
 import { generateID } from "./scripts/generateID.js";
 
-// --- 1. Data Initialization ---
-const projects = [
+let projects = [
     new Project("Default", "proj-default"), 
     new Project("Build House In Minecraft", "proj-minecraft")
 ];
 
-// Add Tasks to Project 0
 projects[0].content = [
     new ToDoList(generateID(), "Playing Games", projects[0].name, "2025-12-20", "Low", "Fun activity"),
     new ToDoList(generateID(), "Buy T-Shirt", projects[0].name, "2025-12-21", "High", "For cleaning"),
     new ToDoList(generateID(), "Buy Groceries", projects[0].name, "2025-12-22", "Medium", "More food"),
 ];
 
-// Add Tasks to Project 1
+
 projects[1].content = [
     new ToDoList(generateID(), "Build Rooms", projects[1].name, "2026-02-20", "High", "Design sleeping place"),
     new ToDoList(generateID(), "Storage Room", projects[1].name, "2026-02-21", "Medium", "For storage"),
 ];
 
-// --- 2. DOM Elements ---
 const projectListContainer = document.querySelector(".my-projects");
 const toDoListContainer = document.querySelector(".to-do-list"); 
-const mainContentContainer = document.querySelector(".main-content"); // Container for Header + Tasks
-
-// --- 3. Render Functions ---
+const mainContentContainer = document.querySelector(".main-content"); 
 
 function renderSidebar() {
     projectListContainer.innerHTML = ''; 
@@ -36,7 +31,6 @@ function renderSidebar() {
     projects.forEach(project => {
         const projElement = project.createProjectElement();
         
-        // Add click event to switch active project
         projElement.querySelector('.row-btn').addEventListener('click', () => {
             loadProjectToMain(project);
         });
@@ -57,26 +51,19 @@ function renderTasks(project) {
     });
 }
 
-/**
- * Loads the Project Header and The Tasks into the main view
- */
+
 function loadProjectToMain(project) {
-    // 1. Clear existing header (but keep the task container)
-    // Assuming .main-content contains the header + .to-do-list
     const existingHeader = mainContentContainer.querySelector('.project-title-container');
     if (existingHeader) {
         existingHeader.remove();
     }
 
-    // 2. Create and Append new Header
     const headerElement = project.createProjectHeader();
     mainContentContainer.prepend(headerElement);
 
-    // 3. Listen for "Add Task" event from this specific header
     headerElement.addEventListener('task-added', (e) => {
         const data = e.detail;
         
-        // Create new Task Object
         const newTask = new ToDoList(
             generateID(), 
             data.name, 
@@ -86,18 +73,141 @@ function loadProjectToMain(project) {
             data.description
         );
         
-        // Update Data
         project.content.push(newTask);
         
-        // Update UI
         renderTasks(project); 
     });
 
-    // 4. Render the tasks for this project
     renderTasks(project);
 }
 
 renderSidebar();
-loadProjectToMain(projects[0]); //
+loadProjectToMain(projects[0]); 
 
-console.log("hello");
+const projectContainer = document.querySelector(".my-projects"); 
+const addProjectBtn = document.getElementById("add-project");
+const addProjectDialog = document.querySelector(".add-project");
+const closeDialogBtn = document.getElementById("close2");
+const addProjectForm = addProjectDialog.querySelector("form"); 
+
+addProjectBtn.addEventListener("click", () => addProjectDialog.showModal());
+closeDialogBtn.addEventListener("click", () => addProjectDialog.close());
+
+addProjectForm.addEventListener("submit", (e) => {
+    const projectNameInput = document.getElementById("project-name-input"); 
+    const projectName = projectNameInput.value;
+    
+    const newProject = new Project(projectName, generateID());
+    
+    projects.push(newProject);
+    
+    renderSidebar();
+
+    loadProjectToMain(newProject);
+
+    projectNameInput.value = "";
+    addProjectDialog.close(); 
+});
+
+projectContainer.addEventListener('project-deleted', (e) => {
+    const projectID = e.detail.id;
+    console.log(`Project ${projectID} deleted`);
+});
+
+projectContainer.addEventListener('project-renamed', (e) => {
+    const { id, newName } = e.detail;
+    console.log(`Project ${id} renamed to ${newName}`);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    function closeAll() {
+        document.querySelectorAll('.menu.show').forEach(menu => {
+            menu.classList.remove('show');
+            menu.setAttribute('aria-hidden', 'true');
+        });
+    }
+
+    const container = document.querySelector('.my-projects');
+
+    if (container) {
+        container.addEventListener('click', function(e) {
+            
+            const toggleBtn = e.target.closest('.more');
+            if (toggleBtn) {
+                e.stopPropagation(); 
+                e.preventDefault();
+
+                const project = toggleBtn.closest('.project');
+                const menu = project.querySelector('.menu');
+                const isAlreadyOpen = menu.classList.contains('show');
+
+                closeAll(); 
+
+                if (!isAlreadyOpen) {
+                    menu.classList.add('show');
+                    menu.setAttribute('aria-hidden', 'false');
+                }
+                return;
+            }
+            
+            const menuItem = e.target.closest('.menu-item');
+            if (menuItem) {
+                e.preventDefault();
+                
+                const project = menuItem.closest('.project');
+                const action = menuItem.dataset.action; 
+                
+                const titleSpan = project.querySelector('.row-btn > span:first-child');
+                const currentTitle = titleSpan.textContent.trim();
+
+                if (action === 'rename') {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = currentTitle;
+                    input.className = 'project-edit-input';
+                    
+                    titleSpan.innerHTML = '';
+                    titleSpan.appendChild(input);
+                    input.focus();
+
+                    const saveName = () => {
+                        const newName = input.value.trim();
+                        titleSpan.textContent = newName || currentTitle; 
+                    };
+
+                    input.addEventListener('keydown', (evt) => {
+                        if (evt.key === 'Enter') {
+                            saveName();
+                        }
+                    });
+
+                    input.addEventListener('blur', () => {
+                        saveName();
+                    });
+
+                    console.log('Rename mode activated');
+                } 
+                else if (action === 'delete') {
+                   console.log('Delete action triggered');
+                   project.remove(); 
+                } 
+                else {
+                    console.log('Other action triggered:', action);
+                }
+
+                closeAll();
+            }
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.menu') && !e.target.closest('.more')) {
+            closeAll();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAll();
+    });
+});
