@@ -5,17 +5,17 @@ import ToDoList from "./scripts/to-do-list.js";
 import { generateID } from "./scripts/generateID.js";
 
 let projects = [
-    new Project("Default", "proj-default"), 
-    new Project("Build House In Minecraft", "proj-minecraft")
+    new Project("Default", "proj-j63r-9pf8"), 
+    new Project("Build House In Minecraft", "proj-x59n-1fh6")
 ];
 
 projects[0].content = [
-    new ToDoList(generateID(), "Playing Games", projects[0].name, "2025-12-20", "Low", "Fun activity"),
-    new ToDoList(generateID(), "Buy T-Shirt", projects[0].name, "2025-12-21", "High", "For cleaning"),
+    new ToDoList("91c06b39-00da-450b-ad7b-159c43199dfc", "Playing Games", projects[0].name, "2025-12-20", "Low", "Fun activity"),
+    new ToDoList("018e4968-389c-4712-88dd-6dcb44ed3c9b", "Buy T-Shirt", projects[0].name, "2025-12-21", "High", "For cleaning"),
 ];
 
 projects[1].content = [
-    new ToDoList(generateID(), "Build Rooms", projects[1].name, "2026-02-20", "High", "Design sleeping place"),
+    new ToDoList("443e59f3-c91c-4932-b5ca-cddaf4bb4fe4", "Build Rooms", projects[1].name, "2026-02-20", "High", "Design sleeping place"),
 ];
 
 const projectListContainer = document.querySelector(".my-projects");
@@ -93,7 +93,7 @@ mainContentContainer.addEventListener('task-added', (e) => {
 
     const data = e.detail;
     const newTask = new ToDoList(
-        generateID(), data.name, currentActiveProject.name, data.date, data.importance, data.description
+        crypto.randomUUID(), data.name, currentActiveProject.name, data.date, data.importance, data.description
     );
     
     currentActiveProject.content.push(newTask);
@@ -118,7 +118,7 @@ addProjectForm.addEventListener("submit", (e) => {
     const projectNameInput = document.getElementById("project-name-input"); 
     const projectName = projectNameInput.value;
 
-    const newProject = new Project(projectName, generateID());
+    const newProject = new Project(projectName, `proj-${generateID()}`);
     projects.push(newProject);
     
     renderSidebar();
@@ -137,3 +137,4 @@ document.addEventListener('click', (e) => {
 
 renderSidebar();
 loadProjectToMain(projects[0]);
+console.log(generateID());

@@ -1,5 +1,3 @@
-import { generateID } from "./generateID.js"; // Adjust path if needed
-
 export default class Project {
     constructor(name, id, content = []) {
         this.name = name;
