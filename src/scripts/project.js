@@ -1,11 +1,11 @@
-import ToDoList from "./to-do-list.js";
-import { generateID } from "./generateID.js";
+import { generateID } from "./generateID.js"; // Adjust path if needed
 
 export default class Project {
     constructor(name, id, content = []) {
         this.name = name;
         this.id = id;
         this.content = content;
+        this.sidebarElement = null; 
     }
 
     createProjectElement() {
@@ -13,47 +13,106 @@ export default class Project {
         tempDiv.dataset.id = this.id;
         
         tempDiv.innerHTML = `
-            <div class="project" id=${this.id}>
+            <div class="project" id="${this.id}">
                 <button class="row-btn" id="btn-${this.id}" type="button">
                     <span class="project-name-display">${this.name}</span> 
+                    <input type="text" class="project-name-edit" value="${this.name}" style="display: none;">
                     <span class="material-symbols-outlined more" title="More">more_horiz</span>
                 </button>
 
                 <div class="menu" role="menu" style="display: none;"> 
-                    <button class="menu-item" data-action="rename">
+                    <button class="menu-item rename-btn" data-action="rename">
                         <span class="material-symbols-outlined">edit</span> Rename
                     </button>
-                    <button class="menu-item delete" data-action="delete">
+                    <button class="menu-item delete-btn" data-action="delete">
                         <span class="material-symbols-outlined">delete</span> Delete
                     </button>
                 </div>
             </div>`;
 
-        const projectElement = tempDiv.firstElementChild;
-        const moreBtn = projectElement.querySelector('.more');
-        const menu = projectElement.querySelector('.menu');
+        this.sidebarElement = tempDiv.firstElementChild;
+        this._attachSidebarEvents(this.sidebarElement);
 
+        return this.sidebarElement;
+    }
+
+    _attachSidebarEvents(element) {
+        const moreBtn = element.querySelector('.more');
+        const menu = element.querySelector('.menu');
+        const renameBtn = element.querySelector('.rename-btn');
+        const deleteBtn = element.querySelector('.delete-btn');
+        const rowBtn = element.querySelector('.row-btn');
+        
+        const nameDisplay = element.querySelector('.project-name-display');
+        const nameInput = element.querySelector('.project-name-edit');
+
+        rowBtn.addEventListener('click', (e) => {
+            if(e.target === moreBtn || e.target === nameInput) return;
+            
+            const event = new CustomEvent('project-selected', { 
+                detail: { project: this }, 
+                bubbles: true 
+            });
+            element.dispatchEvent(event);
+        });
 
         moreBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); 
+            e.stopPropagation();
             document.querySelectorAll('.menu').forEach(m => m.style.display = 'none');
             menu.style.display = 'flex';
         });
 
-        document.addEventListener('click', (e) => {
-            if (menu.style.display === 'flex' && !menu.contains(e.target) && e.target !== moreBtn) {
-                menu.style.display = 'none';
-            }
+        renameBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.style.display = 'none'; 
+            
+            nameDisplay.style.display = 'none';
+            nameInput.style.display = 'block';
+            nameInput.focus();
         });
 
-        return projectElement;
+        const saveRename = () => {
+            if (nameInput.style.display === 'none') return; 
+
+            const newName = nameInput.value.trim();
+            if (newName && newName !== this.name) {
+                this.name = newName;
+                nameDisplay.textContent = this.name;
+
+                element.dispatchEvent(new CustomEvent('project-renamed', {
+                    detail: { id: this.id, newName: this.name },
+                    bubbles: true
+                }));
+            } else {
+                nameInput.value = this.name; 
+            }
+
+            nameInput.style.display = 'none';
+            nameDisplay.style.display = 'block';
+        };
+
+        nameInput.addEventListener('blur', saveRename);
+        nameInput.addEventListener('keydown', (e) => {
+            if(e.key === 'Enter') saveRename();
+        });
+        nameInput.addEventListener('click', (e) => e.stopPropagation()); 
+
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if(confirm(`Are you sure you want to delete "${this.name}"?`)) {
+                element.dispatchEvent(new CustomEvent('project-deleted', {
+                    detail: { id: this.id },
+                    bubbles: true
+                }));
+            }
+        });
     }
 
     createProjectHeader() {
         const tempDiv = document.createElement('div');
 
         tempDiv.innerHTML = `
-            <div class="project-title-container">
+            <div class="project-title-container" id="project-header-${this.id}">
                 <div class="header-top">
                     <h1 class="project-name">${this.name}</h1>
                     <button class="add-task-btn">
@@ -111,7 +170,6 @@ export default class Project {
             form.reset();
         });
 
-
         form.addEventListener('submit', (e) => {
             const formData = {
                 name: headerElement.querySelector(`#task-name-${this.id}`).value,
@@ -121,9 +179,8 @@ export default class Project {
                 projectID: this.id
             };
 
-            const event = new CustomEvent('task-added', { detail: formData });
+            const event = new CustomEvent('task-added', { detail: formData, bubbles: true });
             headerElement.dispatchEvent(event);
-
             form.reset();
         });
 

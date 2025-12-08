@@ -35,9 +35,16 @@ export default class ToDoList {
         editBtn.addEventListener('click', () => this.openEditDialog());
 
         const deleteBtn = taskElement.querySelector('.delete-btn');
-        deleteBtn.addEventListener('click', () => taskElement.remove());
+        deleteBtn.addEventListener('click', () => {
+             taskElement.remove();
+             const event = new CustomEvent('task-deleted', { 
+                 detail: { id: this.id },
+                 bubbles: true 
+             });
+             document.querySelector('.to-do-list').dispatchEvent(event);
+        });
 
-        return taskElement
+        return taskElement;
     }
 
    openEditDialog() {
@@ -52,28 +59,28 @@ export default class ToDoList {
                         <span class="material-symbols-outlined close-btn" style="cursor:pointer;">close</span>
                     </div>
                     
-                    <label for="task-name-${this.id}">
+                    <label>
                         <span>Name</span>
-                        <input type="text" name="task-name" id="task-name-${this.id}" maxlength="20" value="${this.name}">
+                        <input type="text" id="edit-name-${this.id}" value="${this.name}" required>
                     </label>
                     
-                    <label for="task-date-${this.id}">
+                    <label>
                         <span>Date</span>
-                        <input type="date" name="task-date" id="task-date-${this.id}" value="${this.date}">
+                        <input type="date" id="edit-date-${this.id}" value="${this.date}" required>
                     </label>
                     
-                    <label for="task-importance-${this.id}">
+                    <label>
                         <span>Importance/Priority</span>
-                        <select id="task-importance-${this.id}" name="task-importance">
+                        <select id="edit-importance-${this.id}">
                             <option value="Low" ${this.importance === 'Low' ? 'selected' : ''}>Low</option>
                             <option value="Medium" ${this.importance === 'Medium' ? 'selected' : ''}>Medium</option>
                             <option value="High" ${this.importance === 'High' ? 'selected' : ''}>High</option>
                         </select>
                     </label>
                     
-                    <label for="description-${this.id}">
+                    <label>
                         <span>Description</span>
-                        <textarea id="description-${this.id}" class="description-textbox" maxlength="75">${this.description}</textarea>
+                        <textarea id="edit-desc-${this.id}" class="description-textbox" maxlength="75">${this.description}</textarea>
                     </label>
                     
                     <button type="submit">Save Changes</button>
@@ -84,10 +91,24 @@ export default class ToDoList {
 
         const dialog = document.getElementById(`dialog-${this.id}`);
         const closeBtn = dialog.querySelector('.close-btn');
+        const form = dialog.querySelector('form');
 
         closeBtn.addEventListener('click', () => dialog.close());
-        dialog.addEventListener('close', () => dialog.remove()); // Clean up DOM on close
+        
+        form.addEventListener('submit', () => {
+            this.name = document.getElementById(`edit-name-${this.id}`).value;
+            this.date = document.getElementById(`edit-date-${this.id}`).value;
+            this.importance = document.getElementById(`edit-importance-${this.id}`).value;
+            this.description = document.getElementById(`edit-desc-${this.id}`).value;
 
+            const event = new CustomEvent('task-edited', { 
+                detail: { task: this },
+                bubbles: true 
+            });
+            document.querySelector('.to-do-list').dispatchEvent(event);
+        });
+
+        dialog.addEventListener('close', () => dialog.remove());
         dialog.showModal();
     }
 }
