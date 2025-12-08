@@ -29,82 +29,103 @@ export default class Project {
             </div>`;
 
         const projectElement = tempDiv.firstElementChild;
-
         const moreBtn = projectElement.querySelector('.more');
         const menu = projectElement.querySelector('.menu');
 
+
         moreBtn.addEventListener('click', (e) => {
             e.stopPropagation(); 
-            menu.style.display = menu.style.display === 'none' ? 'flex' : 'none';
+            document.querySelectorAll('.menu').forEach(m => m.style.display = 'none');
+            menu.style.display = 'flex';
         });
 
         document.addEventListener('click', (e) => {
-            if (!menu.contains(e.target) && e.target !== moreBtn) {
+            if (menu.style.display === 'flex' && !menu.contains(e.target) && e.target !== moreBtn) {
                 menu.style.display = 'none';
             }
         });
 
         return projectElement;
     }
-}
 
-export const projects = [
-    new Project("Default", "proj@b83o-6qn3"), 
-    new Project("Build House In Minecraft", "proj@p85c-4yv2")
-];
+    createProjectHeader() {
+        const tempDiv = document.createElement('div');
 
-// Add Tasks to Project 0
-projects[0].content = [
-    new ToDoList(generateID(), "Playing Games", projects[0].name, "2025-12-20", "Low", "Fun activity"),
-    new ToDoList(generateID(), "Buy T-Shirt", projects[0].name, "2025-12-21", "High", "For cleaning"),
-    new ToDoList(generateID(), "Buy Groceries", projects[0].name, "2025-12-22", "Medium", "More food"),
-];
+        tempDiv.innerHTML = `
+            <div class="project-title-container">
+                <div class="header-top">
+                    <h1 class="project-name">${this.name}</h1>
+                    <button class="add-task-btn">
+                        <span class="material-symbols-outlined">add</span>
+                        <span>Add New Task</span>
+                    </button>
+                </div>
 
-// Add Tasks to Project 1
-projects[1].content = [
-    new ToDoList(generateID(), "Build Rooms", projects[1].name, "2026-02-20", "High", "Design sleeping place"),
-    new ToDoList(generateID(), "Storage Room", projects[1].name, "2026-02-21", "Medium", "For storage"),
-];
+                <dialog class="add-dialog">
+                    <div class="dialog-header">
+                        <h3>Add New Task</h3>
+                        <span class="material-symbols-outlined close-btn" style="cursor: pointer;">close</span>
+                    </div>
 
+                    <form class="add-task-form" method="dialog">
+                        <label>
+                            <span>Name</span>
+                            <input type="text" name="task-name" id="task-name-${this.id}" required>
+                        </label>
 
+                        <label>
+                            <span>Date</span>
+                            <input type="date" name="task-date" id="task-date-${this.id}" required>
+                        </label>
 
-const projectListContainer = document.querySelector(".my-projects");
-const toDoListContainer = document.querySelector(".to-do-list"); 
+                        <label>
+                            <span>Importance</span>
+                            <select id="task-importance-${this.id}" name="task-importance">
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </label>
 
-function renderProjects() {
-    projectListContainer.innerHTML = ''; 
-    projects.forEach(project => {
-        const projElement = project.createProjectElement();
+                        <label>
+                            <span>Description</span>
+                            <textarea id="description-${this.id}" class="description-textbox" maxlength="75"></textarea>
+                        </label>
+
+                        <button type="submit" class="confirm-add-btn">Add Task</button>
+                    </form>
+                </dialog>
+            </div>`;
+
+        const headerElement = tempDiv.firstElementChild;
+        const addBtn = headerElement.querySelector('.add-task-btn');
+        const dialog = headerElement.querySelector('.add-dialog');
+        const closeBtn = headerElement.querySelector('.close-btn');
+        const form = headerElement.querySelector('.add-task-form');
+
+        addBtn.addEventListener('click', () => dialog.showModal());
         
-        projElement.querySelector('.row-btn').addEventListener('click', () => {
-            renderTasks(project);
+        closeBtn.addEventListener('click', () => {
+            dialog.close();
+            form.reset();
         });
 
-        projectListContainer.appendChild(projElement);
-    });
-}
 
-function renderTasks(project) {
-    toDoListContainer.innerHTML = '';
-    
-    project.content.forEach(task => {
-        if (typeof task.createTaskElement === 'function') {
-            toDoListContainer.appendChild(task.createTaskElement()); 
-        } else {
-            console.error("ToDoList class is missing createTaskElement method");
-        }
-    });
-}
+        form.addEventListener('submit', (e) => {
+            const formData = {
+                name: headerElement.querySelector(`#task-name-${this.id}`).value,
+                date: headerElement.querySelector(`#task-date-${this.id}`).value,
+                importance: headerElement.querySelector(`#task-importance-${this.id}`).value,
+                description: headerElement.querySelector(`#description-${this.id}`).value,
+                projectID: this.id
+            };
 
-renderProjects();
-renderTasks(projects[0]); 
+            const event = new CustomEvent('task-added', { detail: formData });
+            headerElement.dispatchEvent(event);
 
+            form.reset();
+        });
 
-const addDialog = document.querySelector(".add-dialog");
-const addTaskBtn = document.querySelector(".add-task-btn");
-const closeDialog = document.getElementById("close");
-
-if (addDialog && addTaskBtn) {
-    addTaskBtn.addEventListener("click", () => addDialog.showModal());
-    closeDialog.addEventListener("click", () => addDialog.close());
+        return headerElement;
+    }
 }

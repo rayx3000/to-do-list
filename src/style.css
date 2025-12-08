@@ -246,7 +246,7 @@ main{
     gap: 20px;
 }
 
-.project-title{
+.project-title-container .header-top{
     background: #eb7ce1;
     background: radial-gradient(circle, rgba(235, 124, 225, 0.32) 0%, rgba(216, 112, 204, 1) 100%);
     width: 75vw;
@@ -255,11 +255,11 @@ main{
     border-radius: 20%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    gap: 42vw;
+    justify-content: space-between;
+    gap: 25vw;
 }
 
-.project-title h1{
+.project-title-container h1{
     font-family: "Shizuru", system-ui;
 }
 
