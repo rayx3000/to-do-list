@@ -4,6 +4,8 @@ import Project from "./scripts/project.js";
 import ToDoList from "./scripts/to-do-list.js";
 import { generateID } from "./scripts/generateID.js";
 import { loadProjects, saveProjects } from "./scripts/storage.js";
+import { projects } from './scripts/data.js';
+import { home, days, weekly } from './scripts/sidebar.js';
 
 const projectListContainer = document.querySelector(".my-projects");
 const toDoListContainer = document.querySelector(".to-do-list");
@@ -12,9 +14,18 @@ const addProjectBtn = document.getElementById("add-project");
 const addProjectDialog = document.querySelector(".add-project");
 const closeDialogBtn = document.getElementById("close2");
 const addProjectForm = addProjectDialog.querySelector("form");
+const homeBtn = document.getElementById("home");
+const todayBtn = document.getElementById("today");
+const weeklyBtn = document.getElementById("weekly");
 
-let projects = loadProjects();
 let currentActiveProject = projects.length > 0 ? projects[0] : null;
+let currentView = 'home'; 
+
+const views = {
+    home: home,
+    today: days,
+    weekly: weekly
+};
 
 function renderSidebar() {
     projectListContainer.innerHTML = '';
@@ -29,14 +40,29 @@ function renderTasks(project) {
         toDoListContainer.innerHTML = '';
         return;
     }
+    renderTaskArray(project.content);
+}
+
+function renderTaskArray(tasks) {
     toDoListContainer.innerHTML = '';
-    project.content.forEach(task => {
+    tasks.forEach(task => {
         toDoListContainer.appendChild(task.createTaskElement());
     });
 }
 
+function createViewHeader(title) {
+    const header = document.createElement('div');
+    header.classList.add('project-title-container');
+    const name = document.createElement('h2');
+    name.classList.add('project-name');
+    name.textContent = title;
+    header.appendChild(name);
+    return header;
+}
+
 function loadProjectToMain(project) {
     currentActiveProject = project;
+    currentView = 'project';
 
     const existingHeader = mainContentContainer.querySelector('.project-title-container');
     if (existingHeader) existingHeader.remove();
@@ -48,6 +74,24 @@ function loadProjectToMain(project) {
 
     renderTasks(project);
 }
+
+function loadViewToMain(title, tasks) {
+    currentActiveProject = null;
+    currentView = title.toLowerCase();
+
+    const existingHeader = mainContentContainer.querySelector('.project-title-container');
+    existingHeader.innerHTML = `<div class="header-top">
+                    <h1>${title}</h1>
+                    </div>`
+    existingHeader.removeAttribute('id');
+
+    renderTaskArray(tasks);
+}
+
+homeBtn.addEventListener('click', () => loadViewToMain('Home', home));
+todayBtn.addEventListener('click', () => loadViewToMain('Today', days));
+weeklyBtn.addEventListener('click', () => loadViewToMain('Weekly', weekly));
+
 
 projectListContainer.addEventListener('project-selected', (e) => {
     loadProjectToMain(e.detail.project);
@@ -86,7 +130,13 @@ projectListContainer.addEventListener('project-deleted', (e) => {
 
 
 mainContentContainer.addEventListener('task-added', (e) => {
-    if (!currentActiveProject) return;
+    if (!currentActiveProject) {
+        if(projects.length > 0){
+            currentActiveProject = projects[0];
+        } else {
+            return; 
+        }
+    }
 
     const data = e.detail;
     const newTask = new ToDoList(
@@ -95,20 +145,28 @@ mainContentContainer.addEventListener('task-added', (e) => {
 
     currentActiveProject.content.push(newTask);
     saveProjects(projects);
-    renderTasks(currentActiveProject);
+    if (currentView === 'project') {
+        renderTasks(currentActiveProject);
+    } else {
+        loadViewToMain(currentView.charAt(0).toUpperCase() + currentView.slice(1), views[currentView]);
+    }
 });
 
 toDoListContainer.addEventListener('task-deleted', (e) => {
-    if (!currentActiveProject) return;
-    const { id } = e.detail;
-    currentActiveProject.content = currentActiveProject.content.filter(t => t.id !== id);
-    saveProjects(projects);
+    const { id, project } = e.detail;
+    const proj = projects.find(p => p.name === project);
+    if(proj){
+        proj.content = proj.content.filter(t => t.id !== id);
+        saveProjects(projects);
+    }
 });
 
 toDoListContainer.addEventListener('task-edited', (e) => {
-    if (currentActiveProject) {
-        saveProjects(projects);
+    saveProjects(projects);
+    if (currentView === 'project') {
         renderTasks(currentActiveProject);
+    } else {
+        loadViewToMain(currentView.charAt(0).toUpperCase() + currentView.slice(1), views[currentView]);
     }
 });
 
@@ -149,3 +207,4 @@ document.addEventListener('click', (e) => {
 
 renderSidebar();
 loadProjectToMain(currentActiveProject);
+console.log('Loaded projects:', projects);

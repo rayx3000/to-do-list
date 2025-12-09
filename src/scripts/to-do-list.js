@@ -141,7 +141,7 @@ export default class ToDoList {
             }
 
             const event = new CustomEvent('task-deleted', { 
-                detail: { id: this.id },
+                detail: { id: this.id, project: this.project },
                 bubbles: true 
             });
             document.dispatchEvent(event);
