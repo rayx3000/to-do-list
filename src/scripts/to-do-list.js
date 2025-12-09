@@ -136,15 +136,11 @@ export default class ToDoList {
         cancelBtn.addEventListener('click', () => dialog.close());
         
         form.addEventListener('submit', () => {
-            if (this.element) {
-                this.element.remove();
-            }
-
             const event = new CustomEvent('task-deleted', { 
                 detail: { id: this.id, project: this.project },
                 bubbles: true 
             });
-            document.dispatchEvent(event);
+            document.querySelector('.to-do-list').dispatchEvent(event);
         });
 
         dialog.addEventListener('close', () => dialog.remove());

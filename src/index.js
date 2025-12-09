@@ -19,13 +19,14 @@ const todayBtn = document.getElementById("today");
 const weeklyBtn = document.getElementById("weekly");
 
 let currentActiveProject = projects.length > 0 ? projects[0] : null;
-let currentView = 'home'; 
 
 const views = {
     home: home,
     today: days,
     weekly: weekly
 };
+
+let currentView = views.home ? 'home' : (currentActiveProject ? 'project' : null); 
 
 function renderSidebar() {
     projectListContainer.innerHTML = '';
@@ -50,16 +51,6 @@ function renderTaskArray(tasks) {
     });
 }
 
-function createViewHeader(title) {
-    const header = document.createElement('div');
-    header.classList.add('project-title-container');
-    const name = document.createElement('h2');
-    name.classList.add('project-name');
-    name.textContent = title;
-    header.appendChild(name);
-    return header;
-}
-
 function loadProjectToMain(project) {
     currentActiveProject = project;
     currentView = 'project';
@@ -79,7 +70,13 @@ function loadViewToMain(title, tasks) {
     currentActiveProject = null;
     currentView = title.toLowerCase();
 
-    const existingHeader = mainContentContainer.querySelector('.project-title-container');
+    let existingHeader = mainContentContainer.querySelector('.project-title-container');
+    if (!existingHeader) {
+        existingHeader = document.createElement('div');
+        existingHeader.classList.add('project-title-container');
+        mainContentContainer.prepend(existingHeader);
+    }
+
     existingHeader.innerHTML = `<div class="header-top">
                     <h1>${title}</h1>
                     </div>`
@@ -114,17 +111,15 @@ projectListContainer.addEventListener('project-renamed', (e) => {
 projectListContainer.addEventListener('project-deleted', (e) => {
     const { id } = e.detail;
 
-    projects = projects.filter(p => p.id !== id);
-    saveProjects(projects);
-
-    const projectDOM = document.querySelector(`.project[id="${id}"]`);
-    if (projectDOM && projectDOM.parentElement) projectDOM.parentElement.remove();
+    const projectIndex = projects.findIndex(p => p.id === id);
+    if (projectIndex > -1) {
+        projects.splice(projectIndex, 1);
+        saveProjects(projects);
+        renderSidebar();
+    }
 
     if (currentActiveProject && currentActiveProject.id === id) {
-        mainContentContainer.querySelector('.project-title-container')?.remove();
-        toDoListContainer.innerHTML = '';
-        currentActiveProject = projects.length > 0 ? projects[0] : null;
-        loadProjectToMain(currentActiveProject);
+        loadViewToMain('Home', home);
     }
 });
 
@@ -206,5 +201,5 @@ document.addEventListener('click', (e) => {
 });
 
 renderSidebar();
-loadProjectToMain(currentActiveProject);
+loadViewToMain('Home', home);
 console.log('Loaded projects:', projects);

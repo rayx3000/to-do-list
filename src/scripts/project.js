@@ -193,7 +193,7 @@ export default class Project {
             <dialog class="delete-dialog" id="dialog-delete-${this.id}">
                 <form class="delete-task-form" method="dialog">
                     <h3>Confirm Deletion</h3>
-                    <p>Are you sure you want to delete the task "<span id="delete-name-${this.id}"></span>"?</p>
+                    <p>Are you sure you want to delete the project "<span id="delete-name-${this.id}"></span>"?</p>
                     <div class="dialog-buttons">
                         <button type="submit" class="confirm-delete-btn">Delete</button>
                         <button type="button" class="cancel-btn">Cancel</button>
@@ -217,11 +217,11 @@ export default class Project {
         cancelBtn.addEventListener('click', () => dialog.close());
 
         form.addEventListener('submit', () => {
-            const event = new CustomEvent('task-deleted', { 
+            const event = new CustomEvent('project-deleted', { 
                 detail: { id: this.id },
                 bubbles: true 
             });
-            document.dispatchEvent(event);
+            this.sidebarElement.dispatchEvent(event);
         });
 
         dialog.addEventListener('close', () => dialog.remove());
