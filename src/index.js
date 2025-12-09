@@ -127,6 +127,13 @@ addProjectForm.addEventListener("submit", (e) => {
     projectNameInput.value = "";
 });
 
+document.addEventListener('task-deleted', (e) => {
+    console.log('Delete ID:', e.detail.id);
+    const taskEl = document.getElementById(e.detail.id);
+    if(taskEl) taskEl.remove(); // Remove from UI
+    // Logic to update LocalStorage goes here
+});
+
 document.addEventListener('click', (e) => {
     const isMenu = e.target.closest('.menu');
     const isMoreBtn = e.target.closest('.more');

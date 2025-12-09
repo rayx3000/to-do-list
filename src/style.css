@@ -168,11 +168,13 @@ main{
     position: relative;
 }
 
-.project-edit-input{
+.project-name-edit{
     background: transparent;
     border: none;
     border-radius: 12px;
     width: 14.2vw;
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
 
 .more:hover{

@@ -43,6 +43,7 @@ export default class Project {
         
         const nameDisplay = element.querySelector('.project-name-display');
         const nameInput = element.querySelector('.project-name-edit');
+        const more = element.querySelector('.more');
 
         rowBtn.addEventListener('click', (e) => {
             if(e.target === moreBtn || e.target === nameInput) return;
@@ -66,6 +67,7 @@ export default class Project {
             
             nameDisplay.style.display = 'none';
             nameInput.style.display = 'block';
+            more.style.display = 'none';
             nameInput.focus();
         });
 
@@ -87,6 +89,7 @@ export default class Project {
 
             nameInput.style.display = 'none';
             nameDisplay.style.display = 'block';
+            more.style.display = 'block';
         };
 
         nameInput.addEventListener('blur', saveRename);
@@ -97,12 +100,9 @@ export default class Project {
 
         deleteBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if(confirm(`Are you sure you want to delete "${this.name}"?`)) {
-                element.dispatchEvent(new CustomEvent('project-deleted', {
-                    detail: { id: this.id },
-                    bubbles: true
-                }));
-            }
+            menu.style.display = 'none';
+            
+            this.openDeleteDialog();
         });
     }
 
@@ -183,5 +183,48 @@ export default class Project {
         });
 
         return headerElement;
+    }
+
+    openDeleteDialog() {
+        const existingDialog = document.getElementById(`dialog-delete-${this.id}`);
+        if (existingDialog) existingDialog.remove();
+
+        const dialogHTML = `
+            <dialog class="delete-dialog" id="dialog-delete-${this.id}">
+                <form class="delete-task-form" method="dialog">
+                    <h3>Confirm Deletion</h3>
+                    <p>Are you sure you want to delete the task "<span id="delete-name-${this.id}"></span>"?</p>
+                    <div class="dialog-buttons">
+                        <button type="submit" class="confirm-delete-btn">Delete</button>
+                        <button type="button" class="cancel-btn">Cancel</button>
+                    </div>
+                    <span class="material-symbols-outlined close-btn" style="cursor: pointer; position: absolute; top: 10px; right: 10px;">close</span>
+                </form>
+            </dialog>`;
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = dialogHTML;
+        document.body.appendChild(tempDiv.firstElementChild);
+
+        const dialog = document.getElementById(`dialog-delete-${this.id}`);
+        const closeBtn = dialog.querySelector('.close-btn');
+        const cancelBtn = dialog.querySelector('.cancel-btn');
+        const form = dialog.querySelector('form');
+
+        dialog.querySelector(`#delete-name-${this.id}`).textContent = this.name;
+
+        closeBtn.addEventListener('click', () => dialog.close());
+        cancelBtn.addEventListener('click', () => dialog.close());
+
+        form.addEventListener('submit', () => {
+            const event = new CustomEvent('task-deleted', { 
+                detail: { id: this.id },
+                bubbles: true 
+            });
+            document.dispatchEvent(event);
+        });
+
+        dialog.addEventListener('close', () => dialog.remove());
+        dialog.showModal();
     }
 }

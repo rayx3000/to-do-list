@@ -35,19 +35,12 @@ export default class ToDoList {
         editBtn.addEventListener('click', () => this.openEditDialog());
 
         const deleteBtn = taskElement.querySelector('.delete-btn');
-        deleteBtn.addEventListener('click', () => {
-             taskElement.remove();
-             const event = new CustomEvent('task-deleted', { 
-                 detail: { id: this.id },
-                 bubbles: true 
-             });
-             document.querySelector('.to-do-list').dispatchEvent(event);
-        });
+        deleteBtn.addEventListener('click', () => this.openDeleteDialog());
 
         return taskElement;
     }
 
-   openEditDialog() {
+    openEditDialog() {
         const existingDialog = document.getElementById(`dialog-${this.id}`);
         if (existingDialog) existingDialog.remove();
 
@@ -109,6 +102,53 @@ export default class ToDoList {
         });
 
         dialog.addEventListener('close', () => dialog.remove());
+        dialog.showModal();
+    }
+
+    openDeleteDialog() {
+        const existingDialog = document.getElementById(`dialog-delete-${this.id}`);
+        if (existingDialog) existingDialog.remove();
+
+        const dialogHTML = `
+            <dialog class="delete-dialog" id="dialog-delete-${this.id}">
+                <form class="delete-task-form" method="dialog">
+                    <div class="dialog-header">
+                        <h3>Confirm Deletion</h3>
+                        <span class="material-symbols-outlined close-btn" style="cursor:pointer;">close</span>
+                    </div>
+                    <p>Are you sure you want to delete the task <strong id="delete-name-${this.id}"></strong>?</p>
+                    <button type="submit">Delete</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </form>
+            </dialog>`;
+
+        document.body.insertAdjacentHTML('beforeend', dialogHTML);
+
+        const dialog = document.getElementById(`dialog-delete-${this.id}`);
+        
+        dialog.querySelector(`#delete-name-${this.id}`).textContent = this.name;
+
+        const closeBtn = dialog.querySelector('.close-btn');
+        const cancelBtn = dialog.querySelector('.cancel-btn');
+        const form = dialog.querySelector('form');
+
+        closeBtn.addEventListener('click', () => dialog.close());
+        cancelBtn.addEventListener('click', () => dialog.close());
+        
+        form.addEventListener('submit', () => {
+            if (this.element) {
+                this.element.remove();
+            }
+
+            const event = new CustomEvent('task-deleted', { 
+                detail: { id: this.id },
+                bubbles: true 
+            });
+            document.dispatchEvent(event);
+        });
+
+        dialog.addEventListener('close', () => dialog.remove());
+        
         dialog.showModal();
     }
 }
