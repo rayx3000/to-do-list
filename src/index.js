@@ -196,6 +196,14 @@ document.addEventListener('task-deleted', (e) => {
     if (taskEl) taskEl.remove();
 });
 
+const sidebarToggleBtn = document.getElementById("sidebar-toggle");
+const sidebar = document.querySelector(".sidebar");
+
+sidebarToggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+    mainContentContainer.classList.toggle("collapsed");
+});
+
 document.addEventListener('click', (e) => {
     const isMenu = e.target.closest('.menu');
     const isMoreBtn = e.target.closest('.more');

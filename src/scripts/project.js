@@ -59,6 +59,8 @@ export default class Project {
             e.stopPropagation();
             document.querySelectorAll('.menu').forEach(m => m.style.display = 'none');
             menu.style.display = 'flex';
+            menu.style.top = '100%';
+            menu.style.right = '0';
         });
 
         renameBtn.addEventListener('click', (e) => {

@@ -71,29 +71,37 @@ main{
 
 /*SIDEBAR*/
 
+#sidebar-toggle{
+    background-color: transparent;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 1100;
+    position:absolute;
+    top: 12px;
+    right: 8px;
+}
+
 .sidebar{
     background: #e063ff;
     background: radial-gradient(circle, rgba(224, 99, 255, 0.65) 0%, rgba(232, 116, 207, 1) 100%);
-    height: 100vh;
-    padding-top: 2%;
+    padding-top: 3.5%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0px;
+    position: relative;
 }
 
-.sidebar-content > button{
+.sidebar-container {
+    overflow-y: auto;
+    height: 75vh;
+}
+
+.sidebar-content{
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: start;
     gap: 8px;
-    padding: 2.3%;
-    width: 18vw;
-    border: none;
-    font-size: 0.9em;
-    cursor: pointer;
-    border-radius: 12px;
-    background-color: transparent;
-    transition: transform 0.12s ease-in-out;
 }
 
 .sidebar button:hover{
@@ -105,11 +113,19 @@ main{
     transform: scale(0.98);
 }
 
-.sidebar-content{
+.sidebar-content > button{
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: start;
     gap: 8px;
+    padding: 2%;
+    width: 18vw;
+    border: none;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 12px;
+    background-color: transparent;
+    transition: transform 0.12s ease-in-out;
 }
 
 .my-account{
@@ -126,14 +142,15 @@ main{
     border-radius: 50%;
 }
 
+
 .project-container h3{
     padding-left: 2%;
 }
 
 .my-projects{
     margin-top: 12px;
-    height: 38vh;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .my-projects button {
@@ -164,10 +181,9 @@ main{
     opacity: 1;
 }
 
-.projects{
+.project {
     position: relative;
 }
-
 .project-name-edit{
     background: transparent;
     border: none;
@@ -195,8 +211,7 @@ main{
     display: none;
     box-shadow: 0 10px 30px rgba(2,6,23,0.5);
     border: 1px solid rgba(255,255,255,0.04);               /* shown via .show */
-    z-index: 1000;
-    left: 12vw;
+    z-index: 1200;
     display: flex;
     flex-direction: column;
 }
@@ -419,11 +434,12 @@ form button:active, #add-new-project:active{
 
 .task{
     background-color: #d894ec;
-    padding: 7.5%;
+    padding: 4.5% 2% 3.5% 4%;
     border-radius: 30px;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     box-shadow: 0 6px 0 #d96aa8;
     position: relative;
+    height: 200px;
 }
 
 .task:hover{
@@ -515,3 +531,59 @@ form button:active, #add-new-project:active{
     transform: scale(1); 
 }
 
+.sidebar.collapsed {
+    width: 80px;
+    transition: width 0.3s ease;
+}
+
+.sidebar:not(.collapsed) {
+    transition: width 0.3s ease;
+}
+
+
+.sidebar.collapsed .sidebar-content > button > span:last-child,
+.sidebar.collapsed .project-container h3,
+.sidebar.collapsed .my-projects .project-name-edit,
+.sidebar.collapsed .project-container .my-projects, 
+.sidebar.collapsed .my-account #account-name {
+    display: none;
+}
+
+.sidebar.collapsed #sidebar-toggle {
+    right: 28px;
+}
+
+.sidebar.collapsed .sidebar-content > button,
+.sidebar.collapsed .my-projects button, .sidebar.collapsed .my-account {
+    width: 60px;
+    justify-content: center;
+}
+
+.main-content.collapsed {
+    width: calc(100vw - 80px);
+    transition: width 0.3s ease;
+}
+
+.main-content:not(.collapsed){
+    width: 82vw;
+    transition: width 0.3s ease;
+}
+
+.sidebar.collapsed #add-project span{
+    display:none;
+}
+
+.sidebar.collapsed #add-project{
+    justify-content: center;
+}
+
+.sidebar.collapsed .project-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.project-container{
+    transition: opacity 0.3s ease, height 0.3s ease;
+}
