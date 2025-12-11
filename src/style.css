@@ -446,3 +446,58 @@ form button:active, #add-new-project:active{
     color: #555;
 }
 
+/* Completed Task Styles */
+
+.task.completed {
+    background: #e07cff;
+}
+
+.task.completed .task-name h2,
+.task.completed .task-details,
+.task.completed .material-symbols-outlined {
+    color: #333;
+}
+
+.task-checkbox {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    bottom: 20px;
+    margin-right: 5px;
+    width: 22px;
+    height: 22px;
+    border: 2px solid violet; 
+    border-radius: 6px;      
+    background-color: white;
+    transition: all 0.2s ease-in-out;
+    display: grid;
+    place-content: center;
+}
+
+.task-checkbox:hover {
+    background-color: rgb(255, 240, 250);
+    border-color: rgb(200, 100, 200);
+}
+
+.task-checkbox:checked {
+    background-color: violet;
+    border-color: violet;
+}
+
+.task-checkbox::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    transform: scale(0); 
+    box-shadow: inset 1em 1em white; 
+    transform-origin: center;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transition: 120ms transform ease-in-out;
+}
+
+.task-checkbox:checked::before {
+    transform: scale(1); 
+}
+

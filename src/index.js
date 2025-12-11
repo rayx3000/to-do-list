@@ -165,6 +165,10 @@ toDoListContainer.addEventListener('task-edited', (e) => {
     }
 });
 
+toDoListContainer.addEventListener('task-toggled', () => {
+    saveProjects(projects);
+});
+
 
 addProjectBtn.addEventListener("click", () => addProjectDialog.showModal());
 closeDialogBtn.addEventListener("click", () => addProjectDialog.close());

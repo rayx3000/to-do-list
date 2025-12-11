@@ -1,18 +1,19 @@
 export default class ToDoList {
-    constructor(id, name, project, date, importance, description) {
+    constructor(id, name, project, date, importance, description, completed = false) {
         this.id = id;
         this.name = name;
         this.project = project;
         this.date = date;
         this.importance = importance;
         this.description = description;
+        this.completed = completed;
     }
 
     createTaskElement() {
         const tempDiv = document.createElement('div');
         
         tempDiv.innerHTML = `
-             <div class="task" id="${this.id}">
+            <div class="task ${this.completed ? 'completed' : ''}" id="task-${this.id}">
                     <div class="task-options">
                         <button class="material-symbols-outlined edit-btn">edit</button>
                         <button class="material-symbols-outlined delete-btn">delete</button>
@@ -26,10 +27,23 @@ export default class ToDoList {
                         <span class="importance">${this.importance}</span>
                         <p class="description">${this.description}</p>
                     </div>
+                    <input type="checkbox" class="task-checkbox" ${this.completed ? 'checked' : ''}>
             </div>
         `;
 
         const taskElement = tempDiv.firstElementChild;
+
+        const checkbox = taskElement.querySelector('.task-checkbox');
+        checkbox.addEventListener('change', () => {
+            this.completed = checkbox.checked;
+            taskElement.classList.toggle('completed', this.completed);
+            
+            const event = new CustomEvent('task-toggled', { 
+                detail: { task: this },
+                bubbles: true 
+            });
+            taskElement.dispatchEvent(event);
+        });
 
         const editBtn = taskElement.querySelector('.edit-btn');
         editBtn.addEventListener('click', () => this.openEditDialog());

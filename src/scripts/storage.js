@@ -8,12 +8,12 @@ function getSampleProjects() {
     ];
     
     sampleProjects[0].content = [
-        new ToDoList("91c06b39-00da-450b-ad7b-159c43199dfc", "Playing Games", sampleProjects[0].name, "2025-12-20", "Low", "Fun activity"),
-        new ToDoList("018e4968-389c-4712-88dd-6dcb44ed3c9b", "Buy T-Shirt", sampleProjects[0].name, "2025-12-21", "High", "For cleaning"),
+        new ToDoList("91c06b39-00da-450b-ad7b-159c43199dfc", "Playing Games", sampleProjects[0].name, "2025-12-20", "Low", "Fun activity", false),
+        new ToDoList("018e4968-389c-4712-88dd-6dcb44ed3c9b", "Buy T-Shirt", sampleProjects[0].name, "2025-12-21", "High", "For cleaning", false),
     ];
     
     sampleProjects[1].content = [
-        new ToDoList("443e59f3-c91c-4932-b5ca-cddaf4bb4fe4", "Build Rooms", sampleProjects[1].name, "2026-02-20", "High", "Design sleeping place"),
+        new ToDoList("443e59f3-c91c-4932-b5ca-cddaf4bb4fe4", "Build Rooms", sampleProjects[1].name, "2026-02-20", "High", "Design sleeping place", false),
     ];
 
     return sampleProjects;
@@ -40,7 +40,8 @@ export function loadProjects() {
                 taskData.project,
                 taskData.date,
                 taskData.importance,
-                taskData.description
+                taskData.description,
+                taskData.completed
             );
         });
         return project;
