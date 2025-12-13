@@ -77,6 +77,9 @@ main{
     font-size: 28px;
     cursor: pointer;
     z-index: 1100;
+}
+
+.sidebar:not(.collapsed) #sidebar-toggle {
     position:absolute;
     top: 12px;
     right: 8px;
@@ -560,7 +563,6 @@ form button:active, #add-new-project:active{
     transition: width 0.3s ease;
 }
 
-
 .sidebar.collapsed .sidebar-content > button > span:last-child,
 .sidebar.collapsed .project-container h3,
 .sidebar.collapsed .my-projects .project-name-edit,
@@ -569,8 +571,11 @@ form button:active, #add-new-project:active{
     display: none;
 }
 
+
 .sidebar.collapsed #sidebar-toggle {
-    right: 2vw;
+    margin: 0 auto;
+    display: block;
+    margin-top: -5vh;
 }
 
 .sidebar.collapsed .sidebar-content > button,
@@ -632,5 +637,68 @@ form button:active, #add-new-project:active{
 @media (max-height: 450px) {
     .my-account{
         margin-bottom: 20vh;
+    }
+}
+
+@media(max-width: 1000px){
+    .main-content{
+        font-size: 0.95em;
+    }
+
+    .sidebar{
+        width: 25vw;
+    }
+
+    .sidebar-content > button{
+        padding: 1.75%;
+    }
+
+    .sidebar:not(.collapsed) #sidebar-toggle {
+        top: 7.5px;
+    }
+
+    .sidebar-container{
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 900px) {
+    .sidebar{
+        font-size: 0.92em;
+        width: 27.5vw;
+    }
+
+    .sidebar-container{
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 800px) {
+    .sidebar{
+        width: 35vw;
+    }
+
+    .main-content{
+        width: 65vw;
+    }
+}
+
+@media (max-width: 700px) {
+    .sidebar{
+        width: 45vw;
+    }
+
+    .main-content{
+        width: 55vw;
+    }
+}
+
+@media (max-width: 685px) {
+    .sidebar{
+        position: fixed;
+        width: 35vw;
+        z-index: 1000;    
+        top: 0;
+        left: 0;
     }
 }
