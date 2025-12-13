@@ -20,14 +20,23 @@ body {
     animation: subtleShift 15s ease-in-out infinite;
 }
 
-header h1{
-    font-family: "Shizuru", system-ui;
-    padding: 1.2%;
-    background: #b993ed;
+header{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1.5vh;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+     background: #b993ed;
     background: -webkit-linear-gradient(0deg, rgba(185, 147, 237, 0.62) 0%, rgba(219, 147, 237, 1) 100%);
     background: -moz-linear-gradient(0deg, rgba(185, 147, 237, 0.62) 0%, rgba(219, 147, 237, 1) 100%);
     background: linear-gradient(0deg, rgba(185, 147, 237, 0.62) 0%, rgba(219, 147, 237, 1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#B993ED", endColorstr="#DB93ED", GradientType=0);
+    margin-bottom: 0;
+}
+
+header h1{
+    font-family: "Shizuru", system-ui;
+    padding: 1.2%;
 }
 
 main{
@@ -93,7 +102,8 @@ main{
     flex-direction: column;
     gap: 0px;
     position: relative;
-    height: 96.5vh;
+    height: calc(100vh - 42px); 
+    max-height: 100vh; 
 }
 
 .sidebar-container {
@@ -285,8 +295,8 @@ main{
     flex-direction: column;
     gap: 20px;
     width: 82vw;
+    flex-grow: 1; 
 }
-
 .project-title-container{
     display: flex;
     justify-content: center;
@@ -622,6 +632,26 @@ form button:active, #add-new-project:active{
     transition: opacity 0.3s ease, height 0.3s ease;
 }
 
+.hamburger-menu {
+    display: none;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-sidebar{
+    display: none;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
 @media (max-height: 650px) {
     .sidebar-container {
         height: 55vh;
@@ -694,11 +724,114 @@ form button:active, #add-new-project:active{
 }
 
 @media (max-width: 685px) {
-    .sidebar{
+    main{
+        display: block; 
+        width: 100vw;
+    }
+    
+    .sidebar {
         position: fixed;
-        width: 35vw;
-        z-index: 1000;    
         top: 0;
+        left: -100%;
+        width: 48vw;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s ease-in-out;
+        background: #e063ff;
+        background: radial-gradient(circle, rgba(224, 99, 255, 0.95) 0%, rgba(232, 116, 207, 1) 100%);
+        padding-top: 0;
+    }
+
+    .my-projects button{
+        width: 45vw;
+    }
+
+    .sidebar-content > button{
+        width: 45vw; 
+        padding: 10px 15px; 
+    }
+
+    .my-account{
+        width: 45vw;
+        padding-left: 10px;
+    }
+    
+    .sidebar-container {
+        height: 90vh; 
+        margin-top: 50px;
+    }
+
+    .sidebar.open {
         left: 0;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    }
+    
+    .main-content {
+        width: 100vw;
+        padding: 10px; 
+        overflow-y: none;
+    }
+    
+    #sidebar-toggle {
+        display: none;
+    }
+    
+    .hamburger-menu {
+        display: block;
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 999;
+    }
+
+    .close-sidebar{
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: transparent;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: #333;
+        z-index: 1001; 
+    }
+    
+    header h1 {
+        text-align: center;
+        flex-grow: 1;
+        margin: 0;
+        padding-right: 50px;
+        padding-left: 50px; 
+    }
+    
+    .project-title-container {
+        margin-left: 0;
+        padding: 0 10px; 
+        width: 98vw;
+    }
+    
+    .project-title-container .header-top{
+        width: 95vw; 
+        gap: 10vw; 
+    }
+    
+    .to-do-list {
+        margin-left: 0; 
+        margin-right: 0;
+        padding-left: 8%;
+        padding-right: 8%;
+        width: 98vw;
+    }
+
+    dialog {
+        width: 85vw;
+    }
+    form input, form select, form textarea {
+        width: 75vw;
+    }
+    form button, #add-new-project{
+        width: 30vw;
     }
 }

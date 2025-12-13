@@ -203,6 +203,16 @@ document.addEventListener('task-deleted', (e) => {
 
 const sidebarToggleBtn = document.getElementById("sidebar-toggle");
 const sidebar = document.querySelector(".sidebar");
+const hamburgerMenu = document.querySelector(".hamburger-menu");
+const closeSidebarBtn = document.querySelector(".close-sidebar");
+
+closeSidebarBtn.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+});
+
+hamburgerMenu.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+});
 
 sidebarToggleBtn.addEventListener("click", () => {
     sidebar.classList.toggle("collapsed");
