@@ -3,7 +3,7 @@ import './style.css';
 import Project from "./scripts/project.js";
 import ToDoList from "./scripts/to-do-list.js";
 import { generateID } from "./scripts/generateID.js";
-import { loadProjects, saveProjects } from "./scripts/storage.js";
+import { saveProjects } from "./scripts/storage.js";
 import { projects } from './scripts/data.js';
 import { home, days, weekly } from './scripts/sidebar.js';
 

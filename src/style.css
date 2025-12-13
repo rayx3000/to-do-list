@@ -94,7 +94,7 @@ main{
 
 .sidebar-container {
     overflow-y: auto;
-    height: 75vh;
+    height: 74.5vh;
 }
 
 .sidebar-content{
@@ -118,7 +118,7 @@ main{
     align-items: center;
     justify-content: start;
     gap: 8px;
-    padding: 2%;
+    padding: 2.75%;
     width: 18vw;
     border: none;
     font-size: 0.9em;
@@ -135,6 +135,14 @@ main{
     width: 18vw;
     gap: 20px;
     padding-left: 3%;
+    padding-top: 3.5%;
+    padding-bottom: 2.5%;
+    margin-top: auto; /* Push to bottom instead of fixed margin */
+    margin-bottom: 8vh;
+    bottom: 0; /* Stick to bottom */
+    white-space: nowrap;
+    flex: 0 0 auto;
+    overflow: visible;
 }
 
 .my-account img{
@@ -202,7 +210,7 @@ main{
 }
 
 .menu {
-    position: absolute;
+    position: fixed;
     width: 12vw;
     background: #d94cf5;            /* dark background */
     color: #e7e7e7;
@@ -319,8 +327,8 @@ main{
 }
 
 .to-do-list{
-    padding-top: 2%;
-    padding-bottom: 5%;  
+    padding-top: 1.2vh;
+    padding-bottom: 3vh;  
     padding-left: 1%;  
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -550,13 +558,21 @@ form button:active, #add-new-project:active{
 }
 
 .sidebar.collapsed #sidebar-toggle {
-    right: 28px;
+    right: 2vw;
 }
 
 .sidebar.collapsed .sidebar-content > button,
-.sidebar.collapsed .my-projects button, .sidebar.collapsed .my-account {
+.sidebar.collapsed .my-projects button {
+    width: 60px;
+    padding: 7.5px;
+    justify-content: center;
+}
+
+.sidebar.collapsed .my-account{
     width: 60px;
     justify-content: center;
+    padding-left: 0;
+    margin-left: 0.75vw;
 }
 
 .main-content.collapsed {
@@ -569,7 +585,7 @@ form button:active, #add-new-project:active{
     transition: width 0.3s ease;
 }
 
-.sidebar.collapsed #add-project span{
+.sidebar.collapsed #add-project span:last-child{
     display:none;
 }
 
@@ -582,6 +598,7 @@ form button:active, #add-new-project:active{
     flex-direction: column;
     align-items: center;
     transition: opacity 0.3s ease, height 0.3s ease;
+    padding-right: 2px;
 }
 
 .project-container{

@@ -14,5 +14,5 @@ export let days = allTasks.filter(task => {
 export let weekly = allTasks.filter(task => {
     if (!task.date) return false;
     const taskDate = parseISO(task.date);
-    return isThisWeek(taskDate, { weekStartsOn: 1 }); // Assuming week starts on Monday
+    return isThisWeek(taskDate, { weekStartsOn: 1 }); 
 });

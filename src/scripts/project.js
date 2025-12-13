@@ -57,10 +57,17 @@ export default class Project {
 
         moreBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            const isVisible = menu.style.display === 'flex';
             document.querySelectorAll('.menu').forEach(m => m.style.display = 'none');
-            menu.style.display = 'flex';
-            menu.style.top = '100%';
-            menu.style.right = '0';
+
+            if (!isVisible) {
+                menu.style.display = 'flex';
+                const rect = moreBtn.getBoundingClientRect();
+                const menuRect = menu.getBoundingClientRect();
+                menu.style.top = `${rect.top - menuRect.height}px`;
+                menu.style.left = `${rect.right - menuRect.width + 120}px`;
+                menu.style.right = 'auto';
+            }
         });
 
         renameBtn.addEventListener('click', (e) => {
