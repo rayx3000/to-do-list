@@ -153,6 +153,11 @@ toDoListContainer.addEventListener('task-deleted', (e) => {
     if(proj){
         proj.content = proj.content.filter(t => t.id !== id);
         saveProjects(projects);
+        if (currentView === 'project') {
+            renderTasks(currentActiveProject);
+        } else {
+            loadViewToMain(currentView.charAt(0).toUpperCase() + currentView.slice(1), views[currentView]);
+        }
     }
 });
 
@@ -215,3 +220,5 @@ document.addEventListener('click', (e) => {
 renderSidebar();
 loadViewToMain('Home', home);
 console.log('Loaded projects:', projects);
+console.log(window.innerHeight);
+console.log(window.innerWidth);

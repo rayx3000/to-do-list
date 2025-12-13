@@ -90,11 +90,12 @@ main{
     flex-direction: column;
     gap: 0px;
     position: relative;
+    height: 96.5vh;
 }
 
 .sidebar-container {
     overflow-y: auto;
-    height: 74.5vh;
+    height: 80vh;
 }
 
 .sidebar-content{
@@ -135,10 +136,9 @@ main{
     width: 18vw;
     gap: 20px;
     padding-left: 3%;
-    padding-top: 3.5%;
-    padding-bottom: 2.5%;
+    padding-top: 2%;
+    margin-bottom: 12vh;
     margin-top: auto; /* Push to bottom instead of fixed margin */
-    margin-bottom: 8vh;
     bottom: 0; /* Stick to bottom */
     white-space: nowrap;
     flex: 0 0 auto;
@@ -179,6 +179,10 @@ main{
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
+.my-projects button:active {
+    transform: scale(0.97);
+}
+
 .my-projects .more {
     opacity: 0;
     transition: opacity 0.15s ease;
@@ -192,6 +196,14 @@ main{
 .project {
     position: relative;
 }
+
+.project-name-display{
+    max-width: 11vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .project-name-edit{
     background: transparent;
     border: none;
@@ -603,4 +615,22 @@ form button:active, #add-new-project:active{
 
 .project-container{
     transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+@media (max-height: 650px) {
+    .sidebar-container {
+        height: 55vh;
+    }
+}
+
+@media (max-height: 500px) {
+    .my-account{
+        margin-bottom: 16vh;
+    }
+}
+
+@media (max-height: 450px) {
+    .my-account{
+        margin-bottom: 20vh;
+    }
 }
