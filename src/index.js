@@ -219,6 +219,18 @@ sidebarToggleBtn.addEventListener("click", () => {
     mainContentContainer.classList.toggle("collapsed");
 });
 
+if(window.innerWidth <= 685){
+    sidebar.classList.remove("collapsed");
+    mainContentContainer.classList.remove("collapsed");
+}
+
+window.addEventListener("resize", () => {
+    if (window.innerWidth <= 685) {
+        sidebar.classList.remove("collapsed");
+        mainContentContainer.classList.remove("collapsed");
+    }
+});
+
 document.addEventListener('click', (e) => {
     const isMenu = e.target.closest('.menu');
     const isMoreBtn = e.target.closest('.more');

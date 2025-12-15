@@ -103,12 +103,11 @@ main{
     gap: 0px;
     position: relative;
     height: calc(100vh - 42px); 
-    max-height: 100vh; 
 }
 
-.sidebar-container {
+.sidebar-container.scroll {
     overflow-y: auto;
-    height: 80vh;
+    height: 73.5vh;
 }
 
 .sidebar-content{
@@ -116,6 +115,7 @@ main{
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    overflow-x: hidden;
 }
 
 .sidebar button:hover{
@@ -149,10 +149,6 @@ main{
     width: 18vw;
     gap: 20px;
     padding-left: 3%;
-    padding-top: 2%;
-    margin-bottom: 12vh;
-    margin-top: auto; /* Push to bottom instead of fixed margin */
-    bottom: 0; /* Stick to bottom */
     white-space: nowrap;
     flex: 0 0 auto;
     overflow: visible;
@@ -660,13 +656,7 @@ header {
 
 @media (max-height: 500px) {
     .my-account{
-        margin-bottom: 16vh;
-    }
-}
-
-@media (max-height: 450px) {
-    .my-account{
-        margin-bottom: 20vh;
+        margin-bottom: 11.5vh;
     }
 }
 
@@ -676,7 +666,7 @@ header {
     }
 
     .sidebar{
-        width: 25vw;
+        width: 20vw;
     }
 
     .sidebar-content > button{
@@ -690,38 +680,60 @@ header {
     .sidebar-container{
         margin-top: 15px;
     }
+
+    .my-projects button{
+        width: 20vw;
+    }
+
+    .sidebar-content > button{
+        width: 20vw; 
+    }
+
+    .my-account{
+        width: 20vw;
+    }
+
+    .project-name-display{
+        max-width: 12.5vw;
+    }
 }
 
-@media (max-width: 900px) {
+@media(max-width: 850px){
+    .to-do-list{
+        font-size: 0.9em;
+        width: 76.5vw;
+    }
+
+    .sidebar.collapsed #sidebar-toggle{
+        margin-top: -3.8vh;
+    }
+
+    .project-title-container .header-top{
+        width: 76.5vw;
+    }
+
     .sidebar{
-        font-size: 0.92em;
-        width: 27.5vw;
+        width: 22.5vw;
     }
 
-    .sidebar-container{
-        margin-top: 20px;
-    }
-}
-
-@media (max-width: 800px) {
-    .sidebar{
-        width: 35vw;
+    .sidebar-content > button{
+        width: 22.5vw;
+        padding: 2.3%;
     }
 
-    .main-content{
-        width: 65vw;
-    }
-}
-
-@media (max-width: 700px) {
-    .sidebar{
-        width: 45vw;
+    .my-projects button{
+        width: 22.5vw;
+        padding: 5%;
     }
 
-    .main-content{
-        width: 55vw;
+    .my-account{
+        width: 22.5vw;
     }
-}
+
+    .main-content.collapsed .to-do-list{
+        width: 89.3vw;
+    }
+} 
 
 @media (max-width: 685px) {
     main{
@@ -742,17 +754,25 @@ header {
         padding-top: 0;
     }
 
+    .sidebar-container.scroll {
+        height: 82vh; 
+    }
+
     .my-projects button{
-        width: 45vw;
+        width: 49vw;
+    }
+
+    .project-name-display{
+        max-width: 32.5vw;
     }
 
     .sidebar-content > button{
-        width: 45vw; 
+        width: 48vw; 
         padding: 10px 15px; 
     }
 
     .my-account{
-        width: 45vw;
+        width: 48vw;
         padding-left: 10px;
     }
     
