@@ -124,7 +124,7 @@ export default class Project {
                     <h1 class="project-name">${this.name}</h1>
                     <button class="add-task-btn">
                         <span class="material-symbols-outlined">add</span>
-                        <span>Add New Task</span>
+                        <span class="add-task-text">Add New Task</span>
                     </button>
                 </div>
 

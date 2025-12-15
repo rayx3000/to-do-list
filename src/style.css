@@ -233,13 +233,13 @@ main{
 .menu {
     position: fixed;
     width: 12vw;
-    background: #d94cf5;            /* dark background */
+    background: #d94cf5;     
     color: #e7e7e7;
     border-radius:10px;
     padding:6px 0;
     display: none;
     box-shadow: 0 10px 30px rgba(2,6,23,0.5);
-    border: 1px solid rgba(255,255,255,0.04);               /* shown via .show */
+    border: 1px solid rgba(255,255,255,0.04);         
     z-index: 1200;
     display: flex;
     flex-direction: column;
@@ -443,19 +443,19 @@ form button:active, #add-new-project:active{
     transform: scale(0.92);
 }
 
-#close, #close2, .close-btn{
+#close, #close2, .close-btn, .close-sidebar{
     position: absolute;
     top: 8px;
     right: 12px;
     color: rgb(236, 38, 38);
 }
 
-#close:hover, #close2:hover, .close-btn:hover{
+#close:hover, #close2:hover, .close-btn:hover, .close-sidebar:hover{
     color: rgb(221, 90, 90);
     cursor: pointer;
 }
 
-#close:active, #close2:active, .close-btn:active{
+#close:active, #close2:active, .close-btn:active, .close-sidebar:active{
     opacity: 0.82;
     transform: scale(0.92);
 }
@@ -639,6 +639,11 @@ form button:active, #add-new-project:active{
 
 .close-sidebar{
     display: none;
+    background-color: transparent;
+}
+
+.close-sidebar:hover{
+    background-color: transparent;
 }
 
 header {
@@ -663,6 +668,8 @@ header {
 @media(max-width: 1000px){
     .main-content{
         font-size: 0.95em;
+        padding: 0.2%;
+        height: 120vh;
     }
 
     .sidebar{
@@ -702,6 +709,10 @@ header {
     .to-do-list{
         font-size: 0.9em;
         width: 76.5vw;
+    }
+
+    .to-do-list.scroll{
+        height: 100vh;
     }
 
     .sidebar.collapsed #sidebar-toggle{
@@ -759,7 +770,7 @@ header {
     }
 
     .my-projects button{
-        width: 49vw;
+        width: 48vw;
     }
 
     .project-name-display{
@@ -853,5 +864,60 @@ header {
     }
     form button, #add-new-project{
         width: 30vw;
+    }
+}
+
+@media(max-width: 390px) {
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    body{
+        padding: 0;
+        font-size: 0.9em
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .to-do-list{
+        padding-bottom: 1vh;
+    }
+
+    main{
+        width: 120vw;
+    }
+    .sidebar{
+        width: 57.5vw;
+    }
+
+    .my-projects button{
+        width: 57.5vw;
+    }
+
+    .sidebar-content > button{
+        width: 57.5vw; 
+    }
+    .my-account{
+        width: 57.5vw;
+    }
+
+    .project-title-container .header-top {
+        gap: 1vw;
+        font-size: 0.9em;
+    }
+
+    .to-do-list{
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        padding: 0 2%;
+    }
+
+    .sidebar-container.scroll{
+        height: 85.5vh;
+    }
+
+    .add-task-btn > .add-task-text{
+        display: none;
     }
 }
