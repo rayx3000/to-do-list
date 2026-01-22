@@ -8,7 +8,7 @@
 }
 
 body {
-    min-height: 100vh;
+    height: 100vh;
     padding: 0;
     position: relative;
     overflow: hidden;
@@ -18,6 +18,10 @@ body {
         radial-gradient(ellipse at 50% 50%, rgba(240, 126, 255, 0.445) 0%, transparent 60%),
         linear-gradient(135deg, #d665e0 0%, #b085d4 50%, #e67ae2 100%);
     animation: subtleShift 15s ease-in-out infinite;
+}
+
+.container{
+    height: 105vh;
 }
 
 header{
@@ -668,7 +672,6 @@ header {
 @media(max-width: 1000px){
     .main-content{
         font-size: 0.95em;
-        padding: 0.2%;
         height: 120vh;
     }
 
@@ -712,7 +715,7 @@ header {
     }
 
     .to-do-list.scroll{
-        height: 100vh;
+        height: 120vh;
     }
 
     .sidebar.collapsed #sidebar-toggle{
