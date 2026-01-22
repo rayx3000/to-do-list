@@ -51,6 +51,15 @@ function renderTaskArray(tasks) {
     });
 }
 
+function refreshCurrentView() {
+    if (currentView === 'project' && currentActiveProject) {
+        renderTasks(currentActiveProject);
+    } else if (views[currentView]) {
+        const viewTitle = currentView.charAt(0).toUpperCase() + currentView.slice(1);
+        loadViewToMain(viewTitle, views[currentView]);
+    }
+}
+
 function loadProjectToMain(project) {
     currentActiveProject = project;
     currentView = 'project';
