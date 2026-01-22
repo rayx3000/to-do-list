@@ -2,15 +2,25 @@ name: Deploy Webpack Site
 
 on:
   push:
-    branches: ["main"] # Run this whenever you push to the 'main' branch
+    branches: ["main"]
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# This ensures only one deployment happens at a time
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
+    # --- ADD THIS SECTION TO FIX THE ERROR ---
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # ------------------------------------------
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,10 +36,14 @@ jobs:
           npm install
           npm run build
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Change this if your build folder is named something else
+          path: ./dist # Ensure this matches your Webpack output folder
 
       - name: Deploy to GitHub Pages
+        id: deployment # This ID allows the 'url' above to work
         uses: actions/deploy-pages@v4
