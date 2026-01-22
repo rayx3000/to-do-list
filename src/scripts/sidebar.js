@@ -1,17 +1,17 @@
 import { projects } from './data.js';
 import { isToday, isThisWeek, parseISO } from 'date-fns';
 
-let allTasks = projects.flatMap(project => project.content);
+const getTasks = () => projects.flatMap(project => project.content);
 
-export let home = allTasks;
+export const getHomeTasks = () => getTasks();
 
-export let days = allTasks.filter(task => {
+export const getTodayTasks = () => getTasks().filter(task => {
     if (!task.date) return false;
     const taskDate = parseISO(task.date);
     return isToday(taskDate);
 });
 
-export let weekly = allTasks.filter(task => {
+export const getWeeklyTasks = () => getTasks().filter(task => {
     if (!task.date) return false;
     const taskDate = parseISO(task.date);
     return isThisWeek(taskDate, { weekStartsOn: 1 }); 

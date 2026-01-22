@@ -13,7 +13,7 @@ export default class ToDoList {
         const tempDiv = document.createElement('div');
         
         tempDiv.innerHTML = `
-            <div class="task ${this.completed ? 'completed' : ''}" id="task-${this.id}">
+            <div class="task ${this.completed ? 'completed' : ''}" id="${this.id}">
                     <div class="task-options">
                         <button class="material-symbols-outlined edit-btn">edit</button>
                         <button class="material-symbols-outlined delete-btn">delete</button>

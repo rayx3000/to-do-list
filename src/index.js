@@ -5,7 +5,7 @@ import ToDoList from "./scripts/to-do-list.js";
 import { generateID } from "./scripts/generateID.js";
 import { saveProjects } from "./scripts/storage.js";
 import { projects } from './scripts/data.js';
-import { home, days, weekly } from './scripts/sidebar.js';
+import { getHomeTasks, getTodayTasks, getWeeklyTasks } from './scripts/sidebar.js';
 
 const projectListContainer = document.querySelector(".my-projects");
 const toDoListContainer = document.querySelector(".to-do-list");
@@ -21,12 +21,12 @@ const weeklyBtn = document.getElementById("weekly");
 let currentActiveProject = projects.length > 0 ? projects[0] : null;
 
 const views = {
-    home: home,
-    today: days,
-    weekly: weekly
+    home: getHomeTasks,
+    today: getTodayTasks,
+    weekly: getWeeklyTasks
 };
 
-let currentView = views.home ? 'home' : (currentActiveProject ? 'project' : null); 
+let currentView = 'home';
 
 function renderSidebar() {
     projectListContainer.innerHTML = '';
@@ -66,7 +66,7 @@ function loadProjectToMain(project) {
     renderTasks(project);
 }
 
-function loadViewToMain(title, tasks) {
+function loadViewToMain(title, taskFunc) {
     currentActiveProject = null;
     currentView = title.toLowerCase();
 
@@ -82,12 +82,12 @@ function loadViewToMain(title, tasks) {
                     </div>`
     existingHeader.removeAttribute('id');
 
-    renderTaskArray(tasks);
+    renderTaskArray(taskFunc());
 }
 
-homeBtn.addEventListener('click', () => loadViewToMain('Home', home));
-todayBtn.addEventListener('click', () => loadViewToMain('Today', days));
-weeklyBtn.addEventListener('click', () => loadViewToMain('Weekly', weekly));
+homeBtn.addEventListener('click', () => loadViewToMain('Home', getHomeTasks));
+todayBtn.addEventListener('click', () => loadViewToMain('Today', getTodayTasks));
+weeklyBtn.addEventListener('click', () => loadViewToMain('Weekly', getWeeklyTasks));
 
 
 projectListContainer.addEventListener('project-selected', (e) => {
@@ -119,7 +119,7 @@ projectListContainer.addEventListener('project-deleted', (e) => {
     }
 
     if (currentActiveProject && currentActiveProject.id === id) {
-        loadViewToMain('Home', home);
+        loadViewToMain('Home', getHomeTasks);
     }
 });
 
@@ -135,7 +135,7 @@ mainContentContainer.addEventListener('task-added', (e) => {
 
     const data = e.detail;
     const newTask = new ToDoList(
-        crypto.randomUUID(), data.name, currentActiveProject.name, data.date, data.importance, data.description
+        generateID(), data.name, currentActiveProject.name, data.date, data.importance, data.description
     );
 
     currentActiveProject.content.push(newTask);
@@ -240,7 +240,7 @@ document.addEventListener('click', (e) => {
 });
 
 renderSidebar();
-loadViewToMain('Home', home);
+loadViewToMain('Home', getHomeTasks);
 console.log('Loaded projects:', projects);
 console.log(window.innerHeight);
 console.log(window.innerWidth);
